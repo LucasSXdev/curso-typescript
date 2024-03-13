@@ -1,0 +1,6 @@
+{
+    "buildOptions": {
+        "outDir":"dist",
+        "watch":true
+    }
+}
