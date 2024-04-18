@@ -6,7 +6,7 @@ function setSpaceship(name:string,pilot:string,crewLimit:number) {
         pilot,
         crewLimit,
         crew:[],
-        inMission:Boolean
+        inMission:false
     }
 
     spaceships.push(spaceship)
@@ -19,7 +19,7 @@ function findSpaceship(name:string){
     pilot:string,
     crewLimit:number,
     crew:string[],
-    inMission:Boolean
+    inMission:boolean
     }
 
     spaceship = spaceships.find(ship=> ship.name === name)
@@ -40,7 +40,8 @@ function addCrewMember(member:string,spaceship:{name:string,crewLimit:number,cre
 
 }
 
-function sendSpaceShip(spaceship:{name:string,crewLimit:number,crew:string[],inMission:Boolean}){
+function sendSpaceShip(spaceship:{name:string,crewLimit:number,crew:string[],inMission:boolean}){
+    
     if(spaceship.inMission){
         alert(`${spaceship.name} já se encontra em missão`)
     }else if(spaceship.crew.length < Math.floor(spaceship.crewLimit/3)){
@@ -61,18 +62,16 @@ function firstMenu(){
 }
 
 function secondMenu(){
-    let confirmShip =('Em qual nave deseja adicionar um membro?')
-    let spaceship = findSpaceship(confirmShip)
-    let member = prompt('informe o nome do membro')
-
-    const confirmation = confirm(`Deseja realmente adicionar ${member} a ${spaceship.name}?`)
-
-    if(confirmation){
-        if(spaceship){
-            addCrewMember(member,spaceship)
-        }else{
-            alert("a nave não existe!")
-        }
+    let nameShip =prompt('Em qual nave deseja adicionar um membro?')
+    let spaceship = findSpaceship(nameShip)
+    
+    if(spaceship){
+        let member = prompt('informe o nome do membro')
+        addCrewMember(member,spaceship)
+        alert(`${member}foi adicionado a ${spaceship.name}`)
+        
+    }else{
+        alert("a nave não existe!")
     }
 }
 
@@ -88,32 +87,62 @@ function thirdyMenu(){
 
 }
 
+function fourthMenu(){
+    let list = "Lista de naves registradas: \n"
+    spaceships.forEach((ship:{
+        name:string,
+        pilot:string,
+        crewLimit:number,
+        crew:string[],
+        inMission:Boolean
+    })=>{list += `
+    Nome da nave:${ship.name}
+    Piloto:${ship.pilot}
+    Limite da tripulação:${ship.crewLimit}
+    Tripulação:${ship.crew.length}
+    `
+    ship.crew.forEach(member=>{
+        list+=`     -${member}\n`
+    })   
+})
+    alert(list)
+}
 
 
+    let option = 0
+
+    while(option!== 5){
+        const menu =`
+        Selecione uma das opções:
+        1-Cadastrar uma nave
+        2-Adicionar um tripulante
+        3-Enviar em missão
+        4-Listar naves
+        5-Encerrar`
+
+        option = Number(prompt(menu))
 
 
-
-function mainMenu(){
-    let option = prompt(`Selecione uma das opções:
-    1-Cadastrar uma nave
-    2-Adicionar um tripulante
-    3-Enviar em missão
-    4-Encerrar`)
-
-   
-
-    while(option!= '4'){
         switch(option){
-            case "1":
+            case 1:
                 firstMenu()
                 break
-            case "2":
+            case 2:
                 secondMenu()
-            case '3':
-
-            
+                break
+            case 3:
+                thirdyMenu()
+                break
+            case 4:
+                fourthMenu()
+                break
+            case 5:
+                alert('Encerrando o programa!')
+                break
+            default:
+                alert('Opção inválida, por favor tente novamente!')
+                break
+    
         }
-    }
+    }  
 
-   
-}

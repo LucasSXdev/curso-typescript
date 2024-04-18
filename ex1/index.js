@@ -5,7 +5,7 @@ function setSpaceship(name, pilot, crewLimit) {
         pilot: pilot,
         crewLimit: crewLimit,
         crew: [],
-        inMission: Boolean
+        inMission: false
     };
     spaceships.push(spaceship);
     alert("A nave ".concat(spaceship.name, " foi registrada!"));
@@ -41,17 +41,15 @@ function firstMenu() {
     setSpaceship(name, pilot, crewLimit);
 }
 function secondMenu() {
-    var confirmShip = ('Em qual nave deseja adicionar um membro?');
-    var spaceship = findSpaceship(confirmShip);
-    var member = prompt('informe o nome do membro');
-    var confirmation = confirm("Deseja realmente adicionar ".concat(member, " a ").concat(spaceship.name, "?"));
-    if (confirmation) {
-        if (spaceship) {
-            addCrewMember(member, spaceship);
-        }
-        else {
-            alert("a nave não existe!");
-        }
+    var nameShip = prompt('Em qual nave deseja adicionar um membro?');
+    var spaceship = findSpaceship(nameShip);
+    if (spaceship) {
+        var member = prompt('informe o nome do membro');
+        addCrewMember(member, spaceship);
+        alert("".concat(member, "foi adicionado a ").concat(spaceship.name));
+    }
+    else {
+        alert("a nave não existe!");
     }
 }
 function thirdyMenu() {
@@ -62,16 +60,38 @@ function thirdyMenu() {
         sendSpaceShip(spaceship);
     }
 }
-function mainMenu() {
-    var option = prompt("Selecione uma das op\u00E7\u00F5es:\n    1-Cadastrar uma nave\n    2-Adicionar um tripulante\n    3-Enviar em miss\u00E3o\n    4-Encerrar");
-    while (option != '4') {
-        switch (option) {
-            case "1":
-                firstMenu();
-                break;
-            case "2":
-                secondMenu();
-            case '3':
-        }
+function fourthMenu() {
+    var list = "Lista de naves registradas: \n";
+    spaceships.forEach(function (ship) {
+        list += "\n    Nome da nave:".concat(ship.name, "\n    Piloto:").concat(ship.pilot, "\n    Limite da tripula\u00E7\u00E3o:").concat(ship.crewLimit, "\n    Tripula\u00E7\u00E3o:").concat(ship.crew.length, "\n    ");
+        ship.crew.forEach(function (member) {
+            list += "     -".concat(member, "\n");
+        });
+    });
+    alert(list);
+}
+var option = 0;
+while (option !== 5) {
+    var menu = "\n        Selecione uma das op\u00E7\u00F5es:\n        1-Cadastrar uma nave\n        2-Adicionar um tripulante\n        3-Enviar em miss\u00E3o\n        4-Listar naves\n        5-Encerrar";
+    option = Number(prompt(menu));
+    switch (option) {
+        case 1:
+            firstMenu();
+            break;
+        case 2:
+            secondMenu();
+            break;
+        case 3:
+            thirdyMenu();
+            break;
+        case 4:
+            fourthMenu();
+            break;
+        case 5:
+            alert('Encerrando o programa!');
+            break;
+        default:
+            alert('Opção inválida, por favor tente novamente!');
+            break;
     }
 }
