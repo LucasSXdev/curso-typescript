@@ -34,8 +34,67 @@ function updatePlanet(situation:planetSituation,planet:planet){
     alert(`A situação do planeta${planet.name} foi atualizada`)
 }
 
-function addSatellite(name,planet:planet){
+function addSatellite(name:string,planet:planet){
     planet.satellites.push[name]
     alert(`o satelite${name}foi adicionado ao planeta ${planet.name}`)
 }
 
+function removeSatellite(name:string,planet:planet){
+    planet.satellites = planet.satellites.filter(satellite=> satellite !== name)
+    alert(`O satelite ${name} foi removido do planeta ${planet.name}`)
+}
+
+
+function validSituation(){
+    let situation :planetSituation
+    let validSituation = false
+
+    while(!validSituation){
+        let situatuionInput = prompt('informe a situação atual do planeta:\n1-Habitado-\n2-Habitável-\n3-Inabitável-\n4-Inexplorado')
+        
+        switch(situatuionInput){
+            case '1':
+                situation = 'Habitado'
+                validSituation = true
+                break
+            case '2':
+                situation = 'Habitável'
+                validSituation = true
+                break
+            case '3':
+                situation = 'Inabitável'
+                validSituation = true
+                break
+            case '4':
+                situation = 'inexplorado'
+                validSituation = true
+                break
+            default:
+                alert('Opção inválida')
+                break
+        }
+        return situation
+    }
+}
+
+function validPlanet(calbackfn:(planet:planet)=>void){
+    const planetName = prompt('informe o nome do planeta')
+    const planet = findPlanet(planetName)
+
+    if(planet){
+        calbackfn(planet)
+    }else{
+        alert('planeta não encontrado, retornando para o menu...')
+    }
+}
+
+function firtMenuOption(){
+    const name = prompt('informe o nome do planeta')
+    const cordinateA = Number(prompt('informe a cordenada A'))
+    const cordinateB = Number(prompt('informe a cordenada BC'))
+    const cordinateD = Number(prompt('informe a cordenada D'))
+
+    const situation = validSituation()
+
+    const confirmation = confirm(``)
+}
