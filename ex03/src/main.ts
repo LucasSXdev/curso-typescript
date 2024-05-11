@@ -65,3 +65,29 @@ async function showUser(username:string) {
     }
     
 }
+
+function showAllUsers(){
+    let message = `Usuátios:\n`
+
+    users.forEach(user=>{
+        message+=`${user.login}`
+    })
+
+    console.log(message)
+}
+
+function showAllrepo(){
+    const totalRepos = users.reduce((accum,user)=> accum + user.public_repos)
+    console.log(`O grupo possui um total de ${totalRepos} repositórios públicos`)
+}
+
+function showTopFive(){
+    const topFive = users.slice().sort((a,b)=> a.public_repos - a.public_repos).slice(0,5)
+    let message =`top 5 usuários com mais repositórios públicos:\n`
+
+    topFive.forEach((user,index)=>{
+        message += `${index+1} - ${user.login}: ${user.public_repos} repositórios`
+    })
+
+    console.log(message)
+}
