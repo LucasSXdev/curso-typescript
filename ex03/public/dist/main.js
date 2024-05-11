@@ -15,3 +15,26 @@ async function fetchUser(userName) {
             `\nRepositórios: ${user.public_repos}`);
     }
 }
+async function showUser(username) {
+    const user = users.find(user => user.login === username);
+    if (typeof user === 'undefined') {
+        console.log('usuário não encontrado!');
+    }
+    else {
+        const response = await fetch(user.repos_url);
+        const repos = await response.json();
+        let message = `id ${user.id}` +
+            `\nLogin ${user.login}` +
+            `\nNome ${user.name}` +
+            `\nBio ${user.bio}` +
+            `\nRepositórios: ${user.public_repos}`;
+        repos.forEach(repo => {
+            message += `
+            nome: ${repo.name}` +
+                `\nDescription: ${repo.description}` +
+                `\nEstrela: ${repo.stargazers_count}` +
+                `\nÉ um fork : ${repo.fork ? 'sim' : 'não'}\n`;
+        });
+        console.log(message);
+    }
+}
