@@ -44,4 +44,4 @@ class Spaceship {
   let ship = new Spaceship('USS Enterprise', 'James T. Kirk')
   
   ship.speed = 50
-  ship.accelerate(50, 10)
+  ship.accelerate(50, 11)
